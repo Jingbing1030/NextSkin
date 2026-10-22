@@ -41,6 +41,7 @@ export { PlayerHead, type PlayerHeadProps } from './player-head/player-head.tsx'
 export { PlayerPicker, type PlayerPickerOption, type PlayerPickerProps } from './player-picker/player-picker.tsx'
 export { Podium, type PodiumPlace, type PodiumProps } from './podium/podium.tsx'
 export { ProgressBar, type ProgressBarProps } from './progress-bar/progress-bar.tsx'
+export { PasswordMeter, type PasswordMeterProps } from './password-meter/password-meter.tsx'
 export { QrCode, type QrCodeProps } from './qr-code/qr-code.tsx'
 export { SaveBar, type SaveBarProps } from './save-bar/save-bar.tsx'
 export {

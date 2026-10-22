@@ -250,7 +250,11 @@
       "notInstalled": "This site isn't set up yet",
       "notInstalledHint": "Registration opens once the site is set up.",
       "openSetup": "I own this site, set it up",
-      "or": "or"
+      "or": "or",
+      "passwordWeak": "Weak",
+      "passwordFair": "Fair",
+      "passwordStrong": "Strong",
+      "passwordVeryStrong": "Very strong"
     },
     "forgotPassword": {
       "title": "Reset your password",
@@ -270,7 +274,11 @@
       "done": "You've been signed out on all devices. Sign in again with your new password.",
       "invalidLink": "This link has expired or has already been used. Request a new one.",
       "requestAgain": "Request a new link",
-      "failed": "Couldn't reset your password. Try again later."
+      "failed": "Couldn't reset your password. Try again later.",
+      "passwordWeak": "Weak",
+      "passwordFair": "Fair",
+      "passwordStrong": "Strong",
+      "passwordVeryStrong": "Very strong"
     },
     "verifyEmail": {
       "title": "Verify email",

@@ -1,10 +1,11 @@
 'use client'
 
-import { Alert, Button, Field, Form, Input, Link } from '@nextskin/ui'
+import { Alert, Button, Field, Form, Input, Link, PasswordMeter } from '@nextskin/ui'
 import { useTranslations } from 'next-intl'
 import NextLink from 'next/link'
 import { useState, type ReactNode } from 'react'
 import { authErrorCode, postJson } from '../../../lib/api-client'
+import { passwordStrength } from '../../../lib/password-strength'
 
 export interface ResetPasswordFormProps {
   token: string
@@ -19,6 +20,8 @@ export function ResetPasswordForm({ token, password, signIn }: ResetPasswordForm
   const [state, setState] = useState<'form' | 'done' | 'invalid'>('form')
   const [error, setError] = useState<string | null>(null)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  // 密码强度：纯指示，随输入实时更新，不挡提交
+  const [newPassword, setNewPassword] = useState('')
 
   async function submit(values: { newPassword?: string }) {
     setPending(true)
@@ -61,7 +64,26 @@ export function ResetPasswordForm({ token, password, signIn }: ResetPasswordForm
         name="newPassword"
         description={t('auth.signUp.passwordHint', password)}
       >
-        <Input type="password" autoComplete="new-password" required minLength={password.min} maxLength={password.max} />
+        <Input
+          type="password"
+          autoComplete="new-password"
+          required
+          minLength={password.min}
+          maxLength={password.max}
+          onChange={(event) => setNewPassword(event.target.value)}
+        />
+        <PasswordMeter
+          level={passwordStrength(newPassword)}
+          label={
+            passwordStrength(newPassword) === 0
+              ? t('auth.resetPassword.passwordWeak')
+              : passwordStrength(newPassword) === 1
+                ? t('auth.resetPassword.passwordFair')
+                : passwordStrength(newPassword) === 2
+                  ? t('auth.resetPassword.passwordStrong')
+                  : t('auth.resetPassword.passwordVeryStrong')
+          }
+        />
       </Field>
       <div className="mt-2">
         <Button type="submit" variant="primary" size="lg" fullWidth loading={pending}>

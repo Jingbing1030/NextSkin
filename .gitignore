@@ -40,3 +40,8 @@ playwright-report/
 
 # 开发环境的数据目录（SQLite 和材质）
 apps/web/data/
+
+# DSH 沙箱里构建需要的本地缓存目录（/tmp、~/.cache、~/.config 在沙箱里只读，指到工作区绕开）
+/.cache-swc/
+/.config-home/
+/.tmp-test/

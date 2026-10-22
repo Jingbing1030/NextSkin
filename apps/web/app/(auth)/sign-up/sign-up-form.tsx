@@ -1,12 +1,13 @@
 'use client'
 
-import { Alert, Button, Field, Form, Input } from '@nextskin/ui'
+import { Alert, Button, Field, Form, Input, PasswordMeter } from '@nextskin/ui'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { apiError, formErrors, sendJson } from '../../../lib/api-client'
 import { CAPTCHA_HEADER, useCaptcha, type CaptchaConfig } from '../../../lib/captcha'
 import { goToNext } from '../../../lib/navigation'
+import { passwordStrength } from '../../../lib/password-strength'
 import { playerNameInputProps, type PlayerNameRules } from '../../../lib/player-name'
 import { initialFieldValue, PluginField, type PluginFieldValue } from '../../_plugins/plugin-field'
 import type { PluginFieldText } from '../../_plugins/types'
@@ -57,6 +58,8 @@ export function SignUpForm({
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  // 密码强度：纯指示，随输入实时更新，不挡提交（外部登录的完成注册不填密码，不显示）
+  const [passwordValue, setPasswordValue] = useState('')
   const [extra, setExtra] = useState<Record<string, PluginFieldValue>>(() =>
     Object.fromEntries(
       pluginFields.map(({ pluginId, field }) => {
@@ -129,6 +132,19 @@ export function SignUpForm({
             required
             minLength={password.min}
             maxLength={password.max}
+            onChange={(event) => setPasswordValue(event.target.value)}
+          />
+          <PasswordMeter
+            level={passwordStrength(passwordValue)}
+            label={
+              passwordStrength(passwordValue) === 0
+                ? t('signUp.passwordWeak')
+                : passwordStrength(passwordValue) === 1
+                  ? t('signUp.passwordFair')
+                  : passwordStrength(passwordValue) === 2
+                    ? t('signUp.passwordStrong')
+                    : t('signUp.passwordVeryStrong')
+            }
           />
         </Field>
       )}

@@ -250,7 +250,11 @@
       "notInstalled": "站点还没有安装",
       "notInstalledHint": "安装完成之前不能注册。",
       "openSetup": "我是服主，去安装",
-      "or": "或者"
+      "or": "或者",
+      "passwordWeak": "弱",
+      "passwordFair": "一般",
+      "passwordStrong": "强",
+      "passwordVeryStrong": "很强"
     },
     "forgotPassword": {
       "title": "找回密码",
@@ -270,7 +274,11 @@
       "done": "所有设备上的登录都已退出，请用新密码重新登录。",
       "invalidLink": "这个链接已经失效或用过了，请重新找回密码。",
       "requestAgain": "重新找回密码",
-      "failed": "没能重设密码，请稍后重试。"
+      "failed": "没能重设密码，请稍后重试。",
+      "passwordWeak": "弱",
+      "passwordFair": "一般",
+      "passwordStrong": "强",
+      "passwordVeryStrong": "很强"
     },
     "verifyEmail": {
       "title": "验证邮箱",
