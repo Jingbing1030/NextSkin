@@ -45,3 +45,9 @@ apps/web/data/
 /.cache-swc/
 /.config-home/
 /.tmp-test/
+/.cache-home/
+/.corepack-home/
+/.data-home/
+/.pnpm-store/
+/.pnpm-store-dir/
+/.pnpm-bin/
