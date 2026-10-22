@@ -1,5 +1,5 @@
 import { createTranslator } from '@nextskin/i18n'
-import { expect, test } from '@playwright/test'
+import { expect, test } from './fixtures'
 
 // 认证页经过 standalone 产物能用。播种数据的站点地址是录制 BS 时的地址（auth.spec.ts），和浏览器的 Origin 不同，
 // Better Auth 会拒绝页面发起的登录，所以这里只走注册（/api/register 是 JSON 接口，不按 Origin 拦）。
@@ -44,6 +44,24 @@ test('注册失败时错误显示在对应的输入框下方', async ({ page }) 
   const input = page.getByLabel(t('auth.email'))
   await expect(input).toHaveAttribute('aria-invalid', 'true')
   await expect(input).toHaveAccessibleDescription(t('errors.email_taken'))
+})
+
+test('页面水合之前提交登录表单：按 POST 提交，密码不进地址', async ({ page }) => {
+  // 挡掉页面的脚本，页面一直停在服务端渲染的样子
+  await page.route('**/_next/static/**/*.js', (route) => route.abort())
+  await page.goto('/sign-in')
+  await page.getByLabel(t('auth.email')).fill('prehydration@example.test')
+  await page.getByLabel(t('auth.password')).fill('prehydration secret')
+  const submitted = page.waitForRequest(
+    (request) => request.isNavigationRequest() && request.frame() === page.mainFrame(),
+  )
+  await page.getByRole('button', { name: t('auth.signIn.submit') }).click()
+  const request = await submitted
+  expect(request.method()).toBe('POST')
+  expect(new URL(request.url()).pathname).toBe('/sign-in')
+  expect(request.url()).not.toContain('prehydration')
+  await page.waitForLoadState()
+  expect(page.url()).not.toContain('prehydration')
 })
 
 test('BS 的认证页地址跳到新地址', async ({ request }) => {

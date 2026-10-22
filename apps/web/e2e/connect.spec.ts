@@ -1,6 +1,7 @@
 import { createPublicKey, verify, type JsonWebKey } from 'node:crypto'
 import { createTranslator } from '@nextskin/i18n'
-import { expect, test, type APIRequestContext } from '@playwright/test'
+import type { APIRequestContext } from '@playwright/test'
+import { expect, test } from './fixtures'
 import { authorization, clickHydrated, createLauncherClient, listenCallback, waitForCallback } from './oauth-client'
 
 // Yggdrasil Connect 经过 standalone 产物。设备码流程（ADR-0037 切片一）：启动器取代码、用户在 /device 登录并授权、
@@ -144,10 +145,11 @@ test('批准页不许嵌进别的网站：带 X-Frame-Options 和 frame-ancestor
   const response = await page.goto('/device')
   expect(response?.status()).toBe(200)
   expect(response?.headers()['x-frame-options']).toBe('DENY')
-  expect(response?.headers()['content-security-policy']).toBe("frame-ancestors 'none'")
-  // 别的页面不加（全站的 CSP 还没做）
+  expect(response?.headers()['content-security-policy']).toContain("frame-ancestors 'none'")
+  // 全站页面都不许被嵌入（ADR-0053）。
   const home = await request.get('/')
-  expect(home.headers()['x-frame-options']).toBeUndefined()
+  expect(home.headers()['x-frame-options']).toBe('DENY')
+  expect(home.headers()['content-security-policy']).toContain("frame-ancestors 'none'")
 
   // 输错代码：显示错误，表单里留着刚才输的
   await page.getByLabel(t('device.code')).fill('wrong-code')
@@ -272,7 +274,8 @@ test('授权码：从登录页去注册，注册以后回到授权流程；拒�
   await page.getByLabel(t('auth.email')).fill(`signup-${suffix}@example.test`)
   await page.getByLabel(t('auth.password')).fill(password)
   await page.getByLabel(t('auth.signUp.playerName')).fill(`Su${suffix}`)
-  await page.getByRole('button', { name: t('auth.signUp.submit') }).click()
+  // 从登录页点链接过来是整页打开，水合之前点提交会按原生表单提交，等水合完再点
+  await clickHydrated(page.getByRole('button', { name: t('auth.signUp.submit') }))
 
   await expect(page).toHaveURL(/\/oauth\/consent\?/)
   await expect(page.getByText(t('oauth.owner', { nickname: `Ow${suffix}` }))).toBeVisible()
