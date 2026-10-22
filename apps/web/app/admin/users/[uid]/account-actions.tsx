@@ -15,6 +15,7 @@ interface Target {
 /** 改昵称：规则同注册，去掉首尾空白后 1 到 255 个字符（ADR-0018） */
 export function NicknameDialog({ user }: { user: Target }) {
   const t = useTranslations('admin.userDetail.account')
+  const adminErrors = useTranslations('admin.errors')
   return (
     <ActionDialog
       id="admin-nickname"
@@ -26,7 +27,7 @@ export function NicknameDialog({ user }: { user: Target }) {
       send={(values) => sendJson('PATCH', `/api/admin/users/${user.uid}`, { nickname: values.nickname })}
       done={(data) => t('nicknameDone', { nickname: (data as { nickname: string }).nickname })}
     >
-      <Field label={t('nicknameLabel')} name="nickname">
+      <Field label={t('nicknameLabel')} name="nickname" requiredError={adminErrors('required')}>
         <Input defaultValue={user.nickname} maxLength={255} required autoComplete="off" />
       </Field>
     </ActionDialog>
@@ -47,6 +48,7 @@ export function EmailDialog({
   requireVerification: boolean
 }) {
   const t = useTranslations('admin.userDetail.account')
+  const adminErrors = useTranslations('admin.errors')
   const [verified, setVerified] = useState<'verified' | 'unverified' | undefined>(undefined)
   return (
     <ActionDialog
@@ -71,7 +73,7 @@ export function EmailDialog({
       }}
     >
       <p className="text-sm text-text">{t('emailCurrent', { email: user.email })}</p>
-      <Field label={t('newEmailLabel')} name="email">
+      <Field label={t('newEmailLabel')} name="email" requiredError={adminErrors('required')}>
         <Input type="email" maxLength={255} required autoComplete="off" />
       </Field>
       {!mailConfigured && (

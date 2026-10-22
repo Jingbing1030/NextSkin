@@ -61,6 +61,7 @@
     }
   },
   "errors": {
+    "required": "This field is required.",
     "captcha_required": "Please complete the captcha.",
     "captcha_failed": "Captcha verification failed. Please try again.",
     "captcha_unavailable": "Captcha verification is unavailable. Please try again later.",
@@ -2289,7 +2290,8 @@
       "notification_title_length": "The title must contain {min}–{max} characters.",
       "notification_body_length": "The body cannot exceed {max} characters.",
       "notification_recipients_length": "Specify {min}–{max} recipients.",
-      "notification_recipient_unknown": "Recipient “{value}” was not found."
+      "notification_recipient_unknown": "Recipient “{value}” was not found.",
+      "required": "This field is required."
     },
     "userDetail": {
       "metaTitle": "User #{uid}",

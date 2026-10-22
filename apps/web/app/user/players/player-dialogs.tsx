@@ -17,6 +17,7 @@ export interface RenamePlayerDialogProps {
 export function RenamePlayerDialog({ pid, name, nameRule, disabled }: RenamePlayerDialogProps) {
   const t = useTranslations('user.players')
   const common = useTranslations('common')
+  const errorsT = useTranslations('errors')
   const router = useRouter()
   const toast = useToast()
   const [open, setOpen] = useState(false)
@@ -71,7 +72,7 @@ export function RenamePlayerDialog({ pid, name, nameRule, disabled }: RenamePlay
     >
       <Form id={formId} errors={errors} onFormSubmit={(values) => void submit(values)}>
         {error && <Alert tone="danger">{error}</Alert>}
-        <Field label={t('name')} name="name" description={t('nameHint', nameRule)}>
+        <Field label={t('name')} name="name" description={t('nameHint', nameRule)} requiredError={errorsT('required')}>
           <Input {...playerNameInputProps(nameRule)} defaultValue={name} />
         </Field>
       </Form>

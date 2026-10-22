@@ -12,6 +12,7 @@ import { authErrorCode, postJson } from '../../../lib/api-client'
 export function ChangePasswordForm({ min, max }: { min: number; max: number }) {
   const t = useTranslations('user.security.password')
   const signUp = useTranslations('auth.signUp')
+  const errorsT = useTranslations('errors')
   const toast = useToast()
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -45,10 +46,15 @@ export function ChangePasswordForm({ min, max }: { min: number; max: number }) {
     <Form key={generation} errors={errors} onFormSubmit={(values) => void submit(values)}>
       {error && <Alert tone="danger">{error}</Alert>}
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label={t('current')} name="currentPassword">
+        <Field label={t('current')} name="currentPassword" requiredError={errorsT('required')}>
           <Input type="password" autoComplete="current-password" required maxLength={max} />
         </Field>
-        <Field label={t('new')} name="newPassword" description={signUp('passwordHint', { min, max })}>
+        <Field
+          label={t('new')}
+          name="newPassword"
+          description={signUp('passwordHint', { min, max })}
+          requiredError={errorsT('required')}
+        >
           <Input type="password" autoComplete="new-password" required minLength={min} maxLength={max} />
         </Field>
       </div>

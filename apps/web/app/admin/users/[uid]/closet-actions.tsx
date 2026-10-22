@@ -14,6 +14,7 @@ import { TexturePreview, tidValue } from '../../texture-lookup'
  */
 export function AddClosetItemDialog({ uid, nickname }: { uid: number; nickname: string }) {
   const t = useTranslations('admin.userDetail.closet')
+  const adminErrors = useTranslations('admin.errors')
   const [tid, setTid] = useState('')
   return (
     <ActionDialog
@@ -35,7 +36,7 @@ export function AddClosetItemDialog({ uid, nickname }: { uid: number; nickname: 
         return t('added', { name: item.name ?? t('hidden', { tid: item.tid }) })
       }}
     >
-      <Field label={t('tid')} name="tid">
+      <Field label={t('tid')} name="tid" requiredError={adminErrors('required')}>
         <Input value={tid} onValueChange={setTid} inputMode="numeric" maxLength={10} required autoComplete="off" />
       </Field>
       <TexturePreview input={tid} owner={uid} />

@@ -18,6 +18,7 @@ export interface DeleteAccountDialogProps {
 export function DeleteAccountDialog({ players, oauthClients, score }: DeleteAccountDialogProps) {
   const t = useTranslations('user.profile.delete')
   const common = useTranslations('common')
+  const errorsT = useTranslations('errors')
   const format = useFormatter()
   const [open, setOpen] = useState(false)
   const [pending, setPending] = useState(false)
@@ -78,7 +79,7 @@ export function DeleteAccountDialog({ players, oauthClients, score }: DeleteAcco
             <li key={item}>{item}</li>
           ))}
         </ul>
-        <Field label={t('password')} name="password">
+        <Field label={t('password')} name="password" requiredError={errorsT('required')}>
           <Input type="password" autoComplete="current-password" required />
         </Field>
       </Form>

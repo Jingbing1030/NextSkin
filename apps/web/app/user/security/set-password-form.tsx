@@ -14,6 +14,7 @@ import { signInAgain } from './reauth'
 export function SetPasswordForm({ min, max }: { min: number; max: number }) {
   const t = useTranslations('user.security.password')
   const signUp = useTranslations('auth.signUp')
+  const errorsT = useTranslations('errors')
   const router = useRouter()
   const toast = useToast()
   const [pending, setPending] = useState(false)
@@ -60,7 +61,12 @@ export function SetPasswordForm({ min, max }: { min: number; max: number }) {
     <Form errors={errors} onFormSubmit={(values) => void submit(values)}>
       {error && <Alert tone="danger">{error}</Alert>}
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label={t('new')} name="password" description={signUp('passwordHint', { min, max })}>
+        <Field
+          label={t('new')}
+          name="password"
+          description={signUp('passwordHint', { min, max })}
+          requiredError={errorsT('required')}
+        >
           <Input type="password" autoComplete="new-password" required minLength={min} maxLength={max} />
         </Field>
       </div>

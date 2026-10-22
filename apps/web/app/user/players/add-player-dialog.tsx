@@ -19,6 +19,7 @@ export interface AddPlayerDialogProps {
 export function AddPlayerDialog({ cost, score, nameRule, disabled }: AddPlayerDialogProps) {
   const t = useTranslations('user.players')
   const common = useTranslations('common')
+  const errorsT = useTranslations('errors')
   const router = useRouter()
   const toast = useToast()
   const [open, setOpen] = useState(false)
@@ -74,7 +75,7 @@ export function AddPlayerDialog({ cost, score, nameRule, disabled }: AddPlayerDi
       <Form id="add-player" errors={errors} onFormSubmit={(values) => void submit(values)}>
         {insufficient && <Alert tone="warning">{t('insufficient', { cost, score })}</Alert>}
         {error && <Alert tone="danger">{error}</Alert>}
-        <Field label={t('name')} name="name" description={t('nameHint', nameRule)}>
+        <Field label={t('name')} name="name" description={t('nameHint', nameRule)} requiredError={errorsT('required')}>
           <Input {...playerNameInputProps(nameRule)} />
         </Field>
       </Form>

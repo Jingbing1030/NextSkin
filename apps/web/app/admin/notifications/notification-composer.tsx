@@ -36,6 +36,7 @@ function recipientLines(text: string): string[] {
 export function NotificationComposer({ to }: { to: number | null }) {
   const t = useTranslations('admin.notifications')
   const admin = useTranslations('admin')
+  const adminErrors = useTranslations('admin.errors')
   const common = useTranslations('common')
   const site = useTranslations('site.notifications')
   const router = useRouter()
@@ -94,11 +95,11 @@ export function NotificationComposer({ to }: { to: number | null }) {
           />
         </Field>
         {audience === 'specific' && (
-          <Field label={t('recipients')} name="recipients" description={t('recipientsHint')}>
+          <Field label={t('recipients')} name="recipients" requiredError={adminErrors('required')} description={t('recipientsHint')}>
             <Textarea rows={3} value={recipients} onValueChange={setRecipients} required />
           </Field>
         )}
-        <Field label={t('titleLabel')} name="title" description={t('titleHint')}>
+        <Field label={t('titleLabel')} name="title" requiredError={adminErrors('required')} description={t('titleHint')}>
           <Input value={title} onValueChange={setTitle} maxLength={60} required autoComplete="off" />
         </Field>
         <Field label={t('body')} name="body" description={t('bodyHint')}>

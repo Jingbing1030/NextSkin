@@ -127,6 +127,7 @@ function RenameDialog({
 }) {
   const t = useTranslations('user.closet')
   const common = useTranslations('common')
+  const errorsT = useTranslations('errors')
   const router = useRouter()
   const toast = useToast()
   const [pending, setPending] = useState(false)
@@ -182,6 +183,7 @@ function RenameDialog({
           label={t('name')}
           name="name"
           description={nameRegex ? t('nameHintRule', { max: NAME_MAX }) : t('nameHint', { max: NAME_MAX })}
+          requiredError={errorsT('required')}
         >
           <Input required maxLength={NAME_MAX} defaultValue={item.name} />
         </Field>

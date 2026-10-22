@@ -61,7 +61,7 @@ export function ForgotPasswordForm({
   return (
     <Form onFormSubmit={(values) => void submit(values)}>
       {error && <Alert tone="danger">{error}</Alert>}
-      <Field label={t('email')} name="email">
+      <Field label={t('email')} name="email" requiredError={errors('required')}>
         <Input type="email" autoComplete="email" required />
       </Field>
       {captcha.element}

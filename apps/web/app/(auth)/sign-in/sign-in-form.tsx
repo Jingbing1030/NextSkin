@@ -76,11 +76,11 @@ export function SignInForm({
     <div className="flex flex-col gap-4">
       <Form onFormSubmit={(values) => void submit(values)}>
         {error && <Alert tone="danger">{error}</Alert>}
-        <Field label={t('email')} name="email">
+        <Field label={t('email')} name="email" requiredError={errors('required')}>
           {/* webauthn：浏览器支持时，在这个输入框的自动填充建议里列出本站的通行密钥 */}
           <Input type="email" autoComplete="username webauthn" required />
         </Field>
-        <Field label={t('password')} name="password">
+        <Field label={t('password')} name="password" requiredError={errors('required')}>
           <Input type="password" autoComplete="current-password" required />
         </Field>
         <div className="flex items-center justify-between gap-4">

@@ -121,11 +121,16 @@ export function SignUpForm({
   return (
     <Form errors={errors} onFormSubmit={(values) => void submit(values)}>
       {error && <Alert tone="danger">{error}</Alert>}
-      <Field label={t('email')} name="email" description={emailHint()}>
+      <Field label={t('email')} name="email" description={emailHint()} requiredError={errorText('required')}>
         <Input type="email" autoComplete="email" required defaultValue={external?.email ?? undefined} />
       </Field>
       {!external && (
-        <Field label={t('password')} name="password" description={t('signUp.passwordHint', password)}>
+        <Field
+          label={t('password')}
+          name="password"
+          description={t('signUp.passwordHint', password)}
+          requiredError={errorText('required')}
+        >
           <Input
             type="password"
             autoComplete="new-password"
@@ -149,7 +154,12 @@ export function SignUpForm({
         </Field>
       )}
       {playerName ? (
-        <Field label={t('signUp.playerName')} name="playerName" description={t('signUp.playerNameHint', playerName)}>
+        <Field
+          label={t('signUp.playerName')}
+          name="playerName"
+          description={t('signUp.playerNameHint', playerName)}
+          requiredError={errorText('required')}
+        >
           <Input
             {...playerNameInputProps(playerName)}
             autoComplete="username"
@@ -157,7 +167,12 @@ export function SignUpForm({
           />
         </Field>
       ) : (
-        <Field label={t('signUp.nickname')} name="nickname" description={t('signUp.nicknameHint')}>
+        <Field
+          label={t('signUp.nickname')}
+          name="nickname"
+          description={t('signUp.nicknameHint')}
+          requiredError={errorText('required')}
+        >
           <Input autoComplete="nickname" required maxLength={255} defaultValue={external?.nickname ?? undefined} />
         </Field>
       )}

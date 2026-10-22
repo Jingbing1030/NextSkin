@@ -15,6 +15,7 @@ const RESTART = new Set(['INVALID_TWO_FACTOR_COOKIE', 'TOO_MANY_ATTEMPTS_REQUEST
 
 export function TwoFactorForm({ next }: { next: string }) {
   const t = useTranslations('auth.twoFactor')
+  const errorsT = useTranslations('errors')
   const router = useRouter()
   const [method, setMethod] = useState<Method>('totp')
   const [trust, setTrust] = useState(false)
@@ -68,7 +69,7 @@ export function TwoFactorForm({ next }: { next: string }) {
           </Alert>
         )}
         {method === 'totp' ? (
-          <Field label={t('code')} name="code">
+          <Field label={t('code')} name="code" requiredError={errorsT('required')}>
             <Input
               inputMode="numeric"
               autoComplete="one-time-code"
@@ -79,7 +80,7 @@ export function TwoFactorForm({ next }: { next: string }) {
             />
           </Field>
         ) : (
-          <Field label={t('backupCode')} name="code" description={t('backupHint')}>
+          <Field label={t('backupCode')} name="code" description={t('backupHint')} requiredError={errorsT('required')}>
             <Input autoComplete="off" spellCheck={false} maxLength={32} required autoFocus />
           </Field>
         )}

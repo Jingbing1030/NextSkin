@@ -81,6 +81,7 @@ interface DialogProps {
 /** 改名：规则同用户自己改名，不收积分，UUID 不变（ADR-0022、不变量 2） */
 function RenameDialog({ player, mailConfigured, onOpenChange }: DialogProps) {
   const t = useTranslations('admin.players')
+  const adminErrors = useTranslations('admin.errors')
   return (
     <ActionDialog
       id={`admin-player-rename-${player.pid}`}
@@ -94,7 +95,7 @@ function RenameDialog({ player, mailConfigured, onOpenChange }: DialogProps) {
       send={(values) => sendJson('PATCH', `/api/admin/players/${player.pid}`, { name: values.name })}
       done={(data) => t('renamed', { name: (data as { name: string }).name })}
     >
-      <Field label={t('renameLabel')} name="name">
+      <Field label={t('renameLabel')} name="name" requiredError={adminErrors('required')}>
         <Input defaultValue={player.name} maxLength={255} required autoComplete="off" spellCheck={false} />
       </Field>
     </ActionDialog>

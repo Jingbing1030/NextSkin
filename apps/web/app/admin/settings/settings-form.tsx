@@ -270,6 +270,7 @@ function LeafSetting({
   onChange: (draft: Draft) => void
 }) {
   const helpId = useId()
+  const errorsT = useTranslations('admin.errors')
   const value = typeof draft === 'string' ? draft : ''
   switch (control.kind) {
     case 'boolean':
@@ -292,7 +293,7 @@ function LeafSetting({
       )
     case 'number':
       return (
-        <Field label={text.label} name={name} description={text.help} error={error}>
+        <Field label={text.label} name={name} description={text.help} error={error} requiredError={errorsT('required')}>
           <div className="max-w-48">
             <Input
               type="number"
@@ -331,7 +332,7 @@ function LeafSetting({
       )
     case 'text':
       return (
-        <Field label={text.label} name={name} description={text.help} error={error}>
+        <Field label={text.label} name={name} description={text.help} error={error} requiredError={errorsT('required')}>
           <Input
             type={control.format ?? 'text'}
             required={control.required}

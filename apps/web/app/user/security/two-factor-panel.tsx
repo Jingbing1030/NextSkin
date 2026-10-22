@@ -332,8 +332,9 @@ function DisableDialog() {
 
 function PasswordField() {
   const t = useTranslations('user.security.password')
+  const errors = useTranslations('errors')
   return (
-    <Field label={t('current')} name="password">
+    <Field label={t('current')} name="password" requiredError={errors('required')}>
       <Input type="password" autoComplete="current-password" required />
     </Field>
   )

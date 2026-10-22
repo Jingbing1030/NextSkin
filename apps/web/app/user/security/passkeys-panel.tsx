@@ -22,6 +22,7 @@ const NAME_MAX_LENGTH = 64
 
 export function PasskeysPanel({ passkeys }: { passkeys: PasskeyItem[] }) {
   const t = useTranslations('user.security.passkeys')
+  const errors = useTranslations('errors')
   // 服务端渲染时先当作支持，免得按钮在大多数浏览器上闪一下禁用
   const supported = useWebAuthnSupported(true)
 
@@ -190,6 +191,7 @@ function AddPasskeyDialog({ disabled }: { disabled: boolean }) {
 function RenamePasskeyDialog({ id, name }: { id: string; name: string }) {
   const t = useTranslations('user.security.passkeys')
   const common = useTranslations('common')
+  const errors = useTranslations('errors')
   const router = useRouter()
   const toast = useToast()
   const [open, setOpen] = useState(false)
@@ -231,7 +233,7 @@ function RenamePasskeyDialog({ id, name }: { id: string; name: string }) {
     >
       <Form id={formId} onFormSubmit={(values) => void submit(values)}>
         {error && <Alert tone="danger">{error}</Alert>}
-        <Field label={t('name')} name="name">
+        <Field label={t('name')} name="name" requiredError={errors('required')}>
           <Input defaultValue={name} maxLength={NAME_MAX_LENGTH} required autoComplete="off" />
         </Field>
       </Form>

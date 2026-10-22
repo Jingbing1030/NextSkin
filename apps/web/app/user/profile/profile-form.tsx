@@ -11,6 +11,7 @@ import { localeOptions } from '../../../lib/locales'
 /** 昵称和界面语言一起保存（PATCH /api/user）。改了语言，刷新后页面换成新的语言（ADR-0019） */
 export function ProfileForm({ nickname, locale }: { nickname: string; locale: Locale }) {
   const t = useTranslations('user.profile.basics')
+  const errorsT = useTranslations('errors')
   const router = useRouter()
   const toast = useToast()
   const [language, setLanguage] = useState<Locale>(locale)
@@ -38,7 +39,7 @@ export function ProfileForm({ nickname, locale }: { nickname: string; locale: Lo
     <Form errors={errors} onFormSubmit={(values) => void submit(values)}>
       {error && <Alert tone="danger">{error}</Alert>}
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label={t('nickname')} name="nickname" description={t('nicknameHint')}>
+        <Field label={t('nickname')} name="nickname" description={t('nicknameHint')} requiredError={errorsT('required')}>
           <Input defaultValue={nickname} maxLength={255} required autoComplete="nickname" />
         </Field>
         <Field label={t('locale')} name="locale" nativeLabel={false} description={t('localeHint')}>

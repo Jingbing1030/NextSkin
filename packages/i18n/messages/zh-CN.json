@@ -61,6 +61,7 @@
     }
   },
   "errors": {
+    "required": "请填写这一项。",
     "captcha_required": "请先完成验证码。",
     "captcha_failed": "验证码没有通过，请重试。",
     "captcha_unavailable": "验证码服务暂时不可用，请稍后重试。",
@@ -2289,7 +2290,8 @@
       "notification_title_length": "标题需要 {min}–{max} 个字。",
       "notification_body_length": "正文不能超过 {max} 个字。",
       "notification_recipients_length": "请填写 {min}–{max} 个收件人。",
-      "notification_recipient_unknown": "找不到收件人「{value}」。"
+      "notification_recipient_unknown": "找不到收件人「{value}」。",
+      "required": "请填写这一项。"
     },
     "userDetail": {
       "metaTitle": "用户 #{uid}",
